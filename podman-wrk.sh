@@ -18,7 +18,7 @@
 
 set -euo pipefail
 
-SCRIPT_VERSION="1.0.0"
+SCRIPT_VERSION="1.0.1"
 SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 SCRIPT_NAME="$(basename "$SCRIPT_PATH")"

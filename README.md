@@ -4,6 +4,8 @@
 
 Author: Mateusz Okulanis.  Public domain (Unlicense).  See `LICENSE`.
 
+Prebuilt image for testing: <https://hub.docker.com/r/fpgartktic/podman_base> — see section 4.
+
 ---
 
 ## 1 Introduction
@@ -55,6 +57,31 @@ A symlink by default, so `git pull` updates it too; `--copy` if you would rather
 same thing with a copy, since the bundle it was extracted from is usually temporary.
 
 If you skip this, every `wrk ...` in this README is just `./podman-wrk.sh ...`.
+
+**Prebuilt image.** A built image is published at
+<https://hub.docker.com/r/fpgartktic/podman_base>:
+
+```sh
+podman pull fpgartktic/podman_base:v1.0.1
+```
+
+It is there to **test the configuration**, not as the supported way to get this environment. The
+supported path is the offline bundle — build it, `export` it, carry the file. A registry is precisely
+what the target machine does not have, so pulling from one defeats the exercise. Tags there track
+whatever is being tested and are not promised to be stable.
+
+Running the pulled image directly means spelling out by hand what `shell` normally does for you:
+
+```sh
+podman run --rm -it \
+  --userns=keep-id:uid=1000,gid=1000 \
+  -v "$PWD":/wrk:rw \
+  -v "$HOME/.ssh":/mnt/host-ssh:ro \
+  --tmpfs /home/wrk/.ssh:rw,mode=0700 \
+  fpgartktic/podman_base:v1.0.1
+```
+
+The `--tmpfs` is not optional if you intend to `commit` the result — see section 11 for why.
 
 **One name, two meanings.** Inside the container, `wrk` is an alias for `cd /wrk`. It is a different
 thing that happens to share a name; there is no conflict in practice, because the host script does
