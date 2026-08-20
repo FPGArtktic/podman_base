@@ -944,11 +944,18 @@ cmd_status() {
         local state; state="$(podman inspect --format '{{.State.Status}}' "$CONTAINER_NAME" 2>/dev/null)"
         printf '  container ....... %s  [%s]\n' "$CONTAINER_NAME" "$state"
         printf '  container /wrk .. %s\n' "$(container_wrk_mount)"
-        local rw; rw="$(podman ps --all --filter "name=^${CONTAINER_NAME}$" --format '{{.Size}}' 2>/dev/null)"
-        [ -n "$rw" ] && printf '  writable layer .. %s\n' "$rw"
+        # --size is not optional: without it podman reports an empty .Size.
+        local rw
+        rw="$(podman ps --all --size --filter "name=^${CONTAINER_NAME}$" --format '{{.Size}}' 2>/dev/null || true)"
+        if [ -n "$rw" ]; then
+            printf '  writable layer .. %s\n' "$rw"
+        fi
     else
         printf '  container ....... %snot created yet%s\n' "$C_DIM" "$C_RESET"
     fi
+    # Never let the last conditional above decide this function's exit status:
+    # `status` reports, it does not pass judgement.
+    return 0
 }
 
 cmd_stop() {
