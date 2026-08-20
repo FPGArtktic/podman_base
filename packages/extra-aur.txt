@@ -1,0 +1,9 @@
+# ---------------------------------------------------------------------------
+# YOUR OWN AUR packages, installed with yay. One name per line.
+# Installed by the USER PACKAGES section at the very end of the Containerfile.
+#
+# Example:
+#   lazydocker
+#   ttyd
+#   gitui
+# ---------------------------------------------------------------------------

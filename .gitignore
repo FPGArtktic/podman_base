@@ -1,0 +1,16 @@
+.specstory/
+
+# Exported bundles and raw image archives - large binaries, never committed.
+dist/
+*.tar
+*.tar.zst
+*.tar.gz
+*.tzst
+*.tgz
+image.tar
+SHA256SUMS
+manifest.env
+
+# Local scratch
+*.log
+*.tmp

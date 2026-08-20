@@ -1,0 +1,10 @@
+# ---------------------------------------------------------------------------
+# YOUR OWN pacman packages. One name per line, #-comments ignored.
+# Installed by the USER PACKAGES section at the very end of the Containerfile,
+# so they land in the last image layer and a rebuild is cheap.
+#
+# Example:
+#   docker-compose
+#   kubectl
+#   postgresql-libs
+# ---------------------------------------------------------------------------
