@@ -62,8 +62,13 @@ If you skip this, every `wrk ...` in this README is just `./podman-wrk.sh ...`.
 <https://hub.docker.com/r/fpgartktic/podman_base>:
 
 ```sh
-podman pull fpgartktic/podman_base:v1.0.1
+podman pull docker.io/fpgartktic/podman_base:v1.0.1
 ```
+
+The `docker.io/` prefix is not decoration. Podman refuses to guess which registry a short name belongs
+to unless `unqualified-search-registries` is configured, and a system without
+`/etc/containers/registries.conf` has nothing configured — you get
+`short-name "..." did not resolve to an alias`. Fully qualified names always work.
 
 It is there to **test the configuration**, not as the supported way to get this environment. The
 supported path is the offline bundle — build it, `export` it, carry the file. A registry is precisely
@@ -78,7 +83,7 @@ podman run --rm -it \
   -v "$PWD":/wrk:rw \
   -v "$HOME/.ssh":/mnt/host-ssh:ro \
   --tmpfs /home/wrk/.ssh:rw,mode=0700 \
-  fpgartktic/podman_base:v1.0.1
+  docker.io/fpgartktic/podman_base:v1.0.1
 ```
 
 The `--tmpfs` is not optional if you intend to `commit` the result — see section 11 for why.
